@@ -1,33 +1,53 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Bar } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
 
-const App = () => {
-    const [countriesData, setCountriesData] = useState([]);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const Countries = () => {
+    const [aggregatedData, setAggregatedData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios
-            .get("http://127.0.0.1:5000/api/countries") // Fetching data from backend
+        axios.get("http://127.0.0.1:5000/api/countries");
             .then((response) => {
+                console.log("Raw API Data:", response.data);
+
                 const rawData = response.data.data || [];
-                console.log("Raw API Data:", rawData);
-    
+
                 // Aggregate populations by country
                 const aggregation = rawData.reduce((acc, item) => {
-                    const { country, populationCounts } = item;
-                    const population = parseFloat(
-                        populationCounts?.[0]?.value || 0
-                    ); // Ensure it's treated as a number
-                    acc[country] = (acc[country] || 0) + population; // Sum populations
+                    const country = item?.country; // Safeguard against undefined
+                    const population = item?.populationCounts?.[0]?.value || 0; // Default to 0 if missing
+
+                    if (country) {
+                        // Sum populations for each country
+                        acc[country] = (acc[country] || 0) + population;
+                    }
+
                     return acc;
                 }, {});
-    
-                console.log("Aggregated Data:", aggregation);
-    
-                setCountriesData(aggregation); // Save aggregated data
+
+                // Convert aggregated data into an array
+                const formattedData = Object.entries(aggregation).map(
+                    ([country, totalPopulation]) => ({
+                        country,
+                        totalPopulation,
+                    })
+                );
+
+                setAggregatedData(formattedData);
                 setLoading(false);
             })
             .catch((err) => {
@@ -36,82 +56,68 @@ const App = () => {
                 setLoading(false);
             });
     }, []);
-    
 
-    const handleSearch = () => {
-        if (searchQuery.trim() === "") {
-            setResult(null);
-            return;
-        }
-
-        const population = countriesData[searchQuery];
-        if (population) {
-            setResult({
-                country: searchQuery,
-                population: population.toLocaleString(),
-            });
-        } else {
-            setResult({ error: "Country not found" });
-        }
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value.toLowerCase());
     };
 
+    // Filter data based on search query
+    const filteredData = aggregatedData.filter((item) =>
+        item.country?.toLowerCase().includes(searchQuery) // Safeguard against undefined
+    );
+
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) return <div>Error fetching data: {error.message}</div>;
+
+    const chartData = {
+        labels: filteredData.map((item) => item.country),
+        datasets: [
+            {
+                label: "Total Population",
+                data: filteredData.map((item) => item.totalPopulation),
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
+            },
+        ],
+    };
 
     return (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <h1>Country Population Lookup</h1>
+        <div>
+            <h2>Country Total Population</h2>
             <input
                 type="text"
-                placeholder="Enter country name"
+                placeholder="Search by country"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearch}
                 style={{
+                    marginBottom: "20px",
                     padding: "10px",
                     fontSize: "16px",
-                    width: "300px",
-                    marginBottom: "20px",
+                    width: "100%",
                 }}
             />
-            <button
-                onClick={handleSearch}
-                style={{
-                    padding: "10px 20px",
-                    fontSize: "16px",
-                    marginLeft: "10px",
-                    cursor: "pointer",
-                }}
-            >
-                Search
-            </button>
-            {result && (
-    <div
-        style={{
-            marginTop: "30px",
-            padding: "20px",
-            border: "1px solid #ddd",
-            borderRadius: "10px",
-            display: "inline-block",
-            textAlign: "left",
-            backgroundColor: "#f9f9f9",
-            color: "black", // Set text color to black
-        }}
-    >
-        {result.error ? (
-            <h3 style={{ color: "red" }}>{result.error}</h3>
-        ) : (
-            <>
-                <h2>{result.country}</h2>
-                <p>
-                    <strong>Total Population:</strong>{" "}
-                    {result.population}
-                </p>
-            </>
-        )}
-    </div>
-)}
+            <Bar data={chartData} options={{ responsive: true }} />
+            <table style={{ marginTop: "20px", width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                    <tr>
+                        <th style={{ border: "1px solid #ddd", padding: "8px" }}>Country</th>
+                        <th style={{ border: "1px solid #ddd", padding: "8px" }}>Total Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredData.map((item, index) => (
+                        <tr key={index}>
+                            <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                                {item.country}
+                            </td>
+                            <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                                {item.totalPopulation.toLocaleString()}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
 
-export default App;
+export default Countries;
