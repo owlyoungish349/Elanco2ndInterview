@@ -1,82 +1,75 @@
-Country Population Lookup - Elanco 2nd Interview Task
-This application provides a lookup interface for country populations, leveraging a dynamic front-end design and a REST API backend.
+Country Population Lookup
 
-Features
-Search for countries by name with real-time suggestions.
-View a chart and details of selected countries' populations.
-Add up to 6 countries for comparison.
-Fully responsive design, compatible with most devices.
-Prerequisites
-Before running the application, ensure you have the following installed on your system:
+An interactive application for comparing country populations with real-time visualization.
 
-Node.js: Download and install from Node.js.
-NPM: Comes with Node.js. Verify installation with npm -v.
-Dependencies
-Install the following dependencies for the project:
+FEATURES
+--------
+- Real-time country search with suggestions
+- Interactive population charts
+- Compare up to 6 countries simultaneously
+- Fully responsive design
 
-Backend (Optional if provided API is used):
-Flask: A lightweight Python web framework.
-Flask-CORS: For handling Cross-Origin Resource Sharing.
-Requests: For API requests to external services.
-Install them using:
+PREREQUISITES
+------------
+- Node.js (https://nodejs.org/)
+- Python (for backend)
+- NPM (included with Node.js)
 
-bash
-Copy code
-pip install flask flask-cors requests
+INSTALLATION
+-----------
+1. Clone the repository:
+   git clone https://github.com/owlyoungish349/Elanco2ndInterview.git
+   cd Elanco2ndInterview
+
+2. Install Backend Dependencies (Optional):
+   pip install flask flask-cors requests
+
+3. Install Frontend Dependencies:
+   npm install
+
+RUNNING THE APPLICATION
+----------------------
+Frontend:(commands into the terminal)
+   cd frontend
+   cd frontend
+   npm run dev
+   Access at: http://localhost:5173
+
+Backend (Optional):(run app.py)
+  backend\venv\app.py 
+   API available at: http://127.0.0.1:5000/api/countries
+
+DEPENDENCIES
+-----------
 Frontend:
-Axios: For making HTTP requests.
-React-Chart.js 2: For rendering the population chart.
-Chart.js: Dependency for React-Chart.js 2.
-Install them using:
+- Axios
+- React-Chart.js 2
+- Chart.js
 
-bash
-Copy code
-npm install axios react-chartjs-2 chart.js
-How to Run
-Step 1: Clone the Repository
-Clone the project repository from GitHub:
+Backend:
+- Flask
+- Flask-CORS
+- Requests
 
-bash
-Copy code
-git clone https://github.com/owlyoungish349/Elanco2ndInterview.git
-Navigate to the project folder:
+TROUBLESHOOTING
+--------------
+Frontend Issues:
+- Verify Node.js compatibility
+- Check API endpoint accessibility
 
-bash
-Copy code
-cd Elanco2ndInterview
-Step 2: Install Dependencies
-Run the following command to install all required dependencies for the front-end:
+Backend Issues:
+- Update Flask: pip install --upgrade flask
 
-bash
-Copy code
-npm install
-Step 3: Start the Application
-Frontend:
-Start the development server:
+TECH STACK
+----------
+- Frontend: React.js
+- Backend: Flask
+- Charts: Chart.js
+- HTTP Client: Axios
+- API Integration: REST
 
-bash
-Copy code
-npm run dev
-The application will run locally, typically at http://localhost:5173.
+LICENSE
+-------
+MIT
 
-Backend (Optional if using provided API):
-Run the backend server:
-
-bash
-Copy code
-python app.py
-The backend will run locally at http://127.0.0.1:5000/api/countries.
-
-Troubleshooting
-If the application doesn't load correctly:
-
-Verify that the Node.js version is compatible with the project.
-Ensure the API endpoint is accessible and running.
-If backend issues arise:
-
-Update the Flask library to the latest stable version:
-bash
-Copy code
-pip install --upgrade flask
-Check the backend structure and logic for compatibility.
-This project demonstrates both front-end development and backend integration to provide a seamless user experience. Originally, issues were encountered due to an unstable version of Flask and a poorly structured backend. Updating the Flask library and refining the backend logic resolved these issues, ensuring stable performance.
+Made for Elanco Interview
