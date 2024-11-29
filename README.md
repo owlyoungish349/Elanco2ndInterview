@@ -1,4 +1,6 @@
 Country Population Lookup
+(Note: During the presentation I noticed that the problem was the fact that I was using a unstable version of flask and the structure of the backend needed to change and with a bit of
+a amateur mistake I uploaded the previous version of the website with the outdate API)
 
 An interactive application for comparing country populations with real-time visualization.
 
