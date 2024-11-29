@@ -1,61 +1,82 @@
-# Country Population Lookup
+Country Population Lookup - Elanco 2nd Interview Task
+This application provides a lookup interface for country populations, leveraging a dynamic front-end design and a REST API backend.
 
-This project is a Country Population Lookup application built for the Elanco 2nd Interview Task. It allows users to search for and visualize population data of various countries.
+Features
+Search for countries by name with real-time suggestions.
+View a chart and details of selected countries' populations.
+Add up to 6 countries for comparison.
+Fully responsive design, compatible with most devices.
+Prerequisites
+Before running the application, ensure you have the following installed on your system:
 
----
+Node.js: Download and install from Node.js.
+NPM: Comes with Node.js. Verify installation with npm -v.
+Dependencies
+Install the following dependencies for the project:
 
-## How to Run the Application
+Backend (Optional if provided API is used):
+Flask: A lightweight Python web framework.
+Flask-CORS: For handling Cross-Origin Resource Sharing.
+Requests: For API requests to external services.
+Install them using:
 
-### Prerequisites
-Ensure you have the following installed on your system:
-- Node.js (version 16 or above)
-- npm or yarn
-- Modern web browser
+bash
+Copy code
+pip install flask flask-cors requests
+Frontend:
+Axios: For making HTTP requests.
+React-Chart.js 2: For rendering the population chart.
+Chart.js: Dependency for React-Chart.js 2.
+Install them using:
 
----
+bash
+Copy code
+npm install axios react-chartjs-2 chart.js
+How to Run
+Step 1: Clone the Repository
+Clone the project repository from GitHub:
 
-### Steps to Run
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/owlyoungish349/Elanco2ndInterview.git
-Navigate to the project directory:
+bash
+Copy code
+git clone https://github.com/owlyoungish349/Elanco2ndInterview.git
+Navigate to the project folder:
 
 bash
 Copy code
 cd Elanco2ndInterview
-Install dependencies:
+Step 2: Install Dependencies
+Run the following command to install all required dependencies for the front-end:
 
 bash
 Copy code
 npm install
+Step 3: Start the Application
+Frontend:
 Start the development server:
 
 bash
 Copy code
 npm run dev
-Open your browser and navigate to:
+The application will run locally, typically at http://localhost:5173.
 
-arduino
+Backend (Optional if using provided API):
+Run the backend server:
+
+bash
 Copy code
-http://localhost:5173
-Dependencies
-The project uses the following dependencies:
+python app.py
+The backend will run locally at http://127.0.0.1:5000/api/countries.
 
-React: A JavaScript library for building user interfaces.
-Axios: For fetching data from the REST API.
-Chart.js: For rendering bar charts.
-React-Chartjs-2: A React wrapper for Chart.js.
-Backend Challenges and Fixes
-Initially, the project faced issues due to an unstable version of Flask in the backend. These issues were resolved by:
+Troubleshooting
+If the application doesn't load correctly:
 
-Updating Flask to a stable version.
-Reorganizing the backend structure and logic.
-Switching to the REST Countries API for better stability and simplicity.
-Author
-Alireza Kasiri
-Developed for the Elanco 2nd Interview Task
-less
+Verify that the Node.js version is compatible with the project.
+Ensure the API endpoint is accessible and running.
+If backend issues arise:
+
+Update the Flask library to the latest stable version:
+bash
 Copy code
-
-Save it as `README.txt` in your project directory. Let me know if you need further assistance! &#8203;:c
+pip install --upgrade flask
+Check the backend structure and logic for compatibility.
+This project demonstrates both front-end development and backend integration to provide a seamless user experience. Originally, issues were encountered due to an unstable version of Flask and a poorly structured backend. Updating the Flask library and refining the backend logic resolved these issues, ensuring stable performance.
